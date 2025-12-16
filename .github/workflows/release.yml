@@ -1,24 +1,22 @@
 name: Release
 
-permissions:
-  contents: write
-
 on:
   push:
     tags:
-      - v[0-9]+.*
+      - "v*"
+
+permissions:
+  contents: write
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: taiki-e/create-gh-release-action@v1
+      - uses: softprops/action-gh-release@v2
         with:
-          changelog: CHANGELOG.md
-          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
 
-  upload-assets:
+  build-and-upload:
     needs: create-release
     strategy:
       fail-fast: false
@@ -30,22 +28,21 @@ jobs:
             target: x86_64-pc-windows-msvc
           - os: macos-latest
             target: x86_64-apple-darwin
-          # Optional (Apple Silicon build):
-          # - os: macos-latest
-          #   target: aarch64-apple-darwin
+          - os: macos-latest
+            target: aarch64-apple-darwin
+
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
-      # Optional but nice for speed
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
       - uses: Swatinem/rust-cache@v2
 
-      # (Recommended) explicitly set target, especially on macOS
-      - uses: taiki-e/upload-rust-binary-action@v1
+      - name: Build & upload binary to GitHub Release
+        uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: log-slicer
           target: ${{ matrix.target }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          # optional extras:
-          # checksum: sha256
-          # include: README.md,LICENSE

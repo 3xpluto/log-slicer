@@ -5,8 +5,14 @@ on:
   pull_request:
 
 jobs:
-  build-test:
-    runs-on: ubuntu-latest
+  test:
+    name: ${{ matrix.os }} (fmt/clippy/test)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
     steps:
       - uses: actions/checkout@v4
 
@@ -15,8 +21,7 @@ jobs:
         with:
           components: rustfmt, clippy
 
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@v2
 
       - name: Format
         run: cargo fmt --all -- --check
