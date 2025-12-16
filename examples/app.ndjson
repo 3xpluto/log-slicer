@@ -1,0 +1,3 @@
+{"timestamp":"2025-12-15T09:00:00Z","level":"info","message":"boot","request":{"id":"a1b2c3d4e5f60708"}}
+{"timestamp":"2025-12-15T09:00:01Z","level":"error","message":"timeout","request":{"id":"deadbeefdeadbeef"},"duration_ms":1200}
+{"timestamp":"2025-12-15T09:00:02Z","level":"warn","message":"slow request","request":{"id":"cafebabecafebabe"},"duration_ms":980}
