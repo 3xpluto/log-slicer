@@ -1,0 +1,13 @@
+# Default: store text files as LF in the repo
+* text=auto eol=lf
+
+# Rust + common config/docs
+*.rs   text eol=lf
+*.toml text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+
+# Optional: keep PowerShell scripts as CRLF (either is fine, this just avoids surprises)
+*.ps1  text eol=crlf
