@@ -24,11 +24,7 @@ impl EmitPlan {
             .map(|s| s.to_string())
             .collect::<Vec<_>>();
 
-        Ok(Self {
-            mode: args.output,
-            field: args.field.clone(),
-            select,
-        })
+        Ok(Self { mode: args.output, field: args.field.clone(), select })
     }
 }
 

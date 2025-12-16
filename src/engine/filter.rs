@@ -18,17 +18,20 @@ pub struct Filter {
 
 impl Filter {
     pub fn build(args: &Args) -> Result<Self> {
-
         let since = if let Some(s) = &args.since {
-            Some(OffsetDateTime::parse(s, &time::format_description::well_known::Rfc3339)
-                .with_context(|| format!("invalid --since RFC3339: {s}"))?)
+            Some(
+                OffsetDateTime::parse(s, &time::format_description::well_known::Rfc3339)
+                    .with_context(|| format!("invalid --since RFC3339: {s}"))?,
+            )
         } else {
             None
         };
 
         let until = if let Some(s) = &args.until {
-            Some(OffsetDateTime::parse(s, &time::format_description::well_known::Rfc3339)
-                .with_context(|| format!("invalid --until RFC3339: {s}"))?)
+            Some(
+                OffsetDateTime::parse(s, &time::format_description::well_known::Rfc3339)
+                    .with_context(|| format!("invalid --until RFC3339: {s}"))?,
+            )
         } else {
             None
         };

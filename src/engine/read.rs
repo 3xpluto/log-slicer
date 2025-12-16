@@ -13,9 +13,7 @@ pub fn iter_records(args: &Args) -> Result<Box<dyn Iterator<Item = Record>>> {
     if args.paths.is_empty() {
         // Own stdin handle inside the iterator (no lock lifetime issues).
         let reader = io::BufReader::new(io::stdin());
-        let it = reader
-            .lines()
-            .filter_map(move |line| Record::from_line(line, input).ok());
+        let it = reader.lines().filter_map(move |line| Record::from_line(line, input).ok());
         return Ok(Box::new(it));
     }
 
@@ -30,7 +28,5 @@ pub fn iter_records(args: &Args) -> Result<Box<dyn Iterator<Item = Record>>> {
 fn iter_file(path: PathBuf, input: Input) -> Result<impl Iterator<Item = Record>> {
     let file = File::open(&path).with_context(|| format!("failed to open {}", path.display()))?;
     let reader = io::BufReader::new(file);
-    Ok(reader
-        .lines()
-        .filter_map(move |line| Record::from_line(line, input).ok()))
+    Ok(reader.lines().filter_map(move |line| Record::from_line(line, input).ok()))
 }

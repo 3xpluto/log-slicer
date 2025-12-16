@@ -43,7 +43,6 @@ pub struct Args {
     #[arg(long, default_value = "timestamp")]
     pub time_field: String,
 
-
     /// Keep only the first N matching lines.
     #[arg(long)]
     pub head: Option<usize>,

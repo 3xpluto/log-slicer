@@ -11,7 +11,10 @@ pub struct Record {
 }
 
 impl Record {
-    pub fn from_line(line: std::result::Result<String, std::io::Error>, input: Input) -> Result<Self> {
+    pub fn from_line(
+        line: std::result::Result<String, std::io::Error>,
+        input: Input,
+    ) -> Result<Self> {
         let raw = line.context("failed to read line")?;
         let json = match input {
             Input::Text => None,
@@ -31,7 +34,6 @@ impl Record {
         let v = self.json.as_ref()?;
         get_dotted(v, dotted)
     }
-
 
     pub fn get_timestamp(&self, dotted: &str) -> Option<OffsetDateTime> {
         let s = self.get_field_string(dotted)?;
@@ -71,7 +73,6 @@ fn get_dotted<'a>(v: &'a Value, dotted: &str) -> Option<&'a Value> {
     Some(cur)
 }
 
-
 fn parse_timestamp(s: &str) -> Result<OffsetDateTime> {
     // Prefer RFC3339 (e.g. 2025-12-15T09:00:01Z)
     if let Ok(dt) = OffsetDateTime::parse(s, &time::format_description::well_known::Rfc3339) {
@@ -84,7 +85,6 @@ fn parse_timestamp(s: &str) -> Result<OffsetDateTime> {
     let prim = time::PrimitiveDateTime::parse(s, &fmt).context("failed to parse timestamp")?;
     Ok(prim.assume_utc())
 }
-
 
 #[cfg(test)]
 mod tests {
