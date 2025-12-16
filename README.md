@@ -1,4 +1,6 @@
 # log-slicer
+[![CI](https://github.com/3xpluto/log-slicer/actions/workflows/ci.yml/badge.svg)](https://github.com/3xpluto/log-slicer/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A fast, streaming CLI to **filter**, **search**, and **reshape** logs — works with plain text or NDJSON.
 Think: `grep + jq`, but optimized for day-to-day debugging.
